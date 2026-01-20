@@ -1,0 +1,45 @@
+# Chaves privadas - NÃO COMMITAR!
+privateKeyChallenge.pem
+publicKey.pem
+private-key.pem
+public-key.pem
+*.pem
+
+# Binários Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/bin/
+challenge-joao-barbosa
+
+# Arquivos de teste
+*.test
+*.out
+coverage.out
+
+# Dependências
+vendor/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+
+# Configurações locais
+.env
+.env.local
+
+# Arquivos temporários
+*.tmp
+*.bak
+
+# OS
+Thumbs.db
