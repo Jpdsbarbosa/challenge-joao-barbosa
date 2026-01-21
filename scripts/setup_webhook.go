@@ -26,18 +26,38 @@ func main() {
 	ngrokURL := os.Args[1]
 	webhookURL := ngrokURL + "/webhook"
 
-	// Carregar chave privada
-	content, err := os.ReadFile("privateKeyChallenge.pem")
-	if err != nil {
-		fmt.Printf("❌ Erro ao ler chave: %v\n", err)
+	// Carregar Project ID
+	projectID := os.Getenv("STARK_PROJECT_ID")
+	if projectID == "" {
+		fmt.Println("❌ Erro: STARK_PROJECT_ID não definida")
+		fmt.Println()
+		fmt.Println("Configure a variável de ambiente:")
+		fmt.Println("  export STARK_PROJECT_ID=\"seu-project-id\"")
 		return
+	}
+
+	// Carregar chave privada
+	privateKey := os.Getenv("PRIVATE_KEY")
+	if privateKey == "" {
+		content, err := os.ReadFile("privateKeyChallenge.pem")
+		if err != nil {
+			fmt.Printf("❌ Erro ao ler chave: %v\n", err)
+			return
+		}
+		privateKey = string(content)
+	}
+
+	// Carregar environment
+	environment := os.Getenv("STARK_ENVIRONMENT")
+	if environment == "" {
+		environment = "sandbox"
 	}
 
 	// Configurar StarkBank
 	starkbank.User = project.Project{
-		Environment: "sandbox",
-		Id:          "6211225704726528",
-		PrivateKey:  string(content),
+		Environment: environment,
+		Id:          projectID,
+		PrivateKey:  privateKey,
 	}
 
 	fmt.Println("╔════════════════════════════════════════════════════════╗")
